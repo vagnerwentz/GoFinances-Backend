@@ -7,7 +7,7 @@ import Transaction from '../models/Transaction';
 import Category from '../models/Category';
 
 /* Repositories */
-import TransactionRepository from '../repositories/TransactionsRepository';
+import TransactionsRepository from '../repositories/TransactionsRepository';
 
 interface Request {
   title: string;
@@ -23,7 +23,7 @@ class CreateTransactionService {
     category,
   }: Request): Promise<Transaction> {
     const categoryRepository = getRepository(Category);
-    const transactionsRepository = getCustomRepository(TransactionRepository);
+    const transactionsRepository = getCustomRepository(TransactionsRepository);
 
     const { total } = await transactionsRepository.getBalance();
 
@@ -50,7 +50,7 @@ class CreateTransactionService {
       title,
       value,
       type,
-      category_id: transactionCategory.id,
+      category: transactionCategory,
     });
 
     await transactionsRepository.save(transaction);
